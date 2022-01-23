@@ -3,9 +3,6 @@ import os
 import numpy as np
 import streamlit as st
 
-if "goals" not in st.session_state:
-    st.session_state["goals"] = []
-
 
 def get_goals(ngoals, nplayers):
     filter_ = lambda x: "green" not in x if nplayers < 4 else lambda x: x  # noqa: E731
@@ -23,7 +20,7 @@ with col2:
 with col3:
     pick = st.button("Pick", on_click=get_goals, args=(ngoals, nplayers))
 
-if len(st.session_state.goals) > 0:
+if len(st.session_state.get("goals", [])) > 0:
     cols = st.columns(4)
     for idx, card in enumerate(st.session_state.goals):
         with cols[idx % 4] as col:
